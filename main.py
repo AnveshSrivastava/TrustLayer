@@ -1,10 +1,17 @@
 """FastAPI application entry point for the hallucination detector.
 
-This module defines the main FastAPI application with basic routes.
+This module defines the main FastAPI application with routes and orchestration.
 """
 
+import logging
+
 from fastapi import FastAPI
+
+from collectors.collector import collect_responses
 from models import QueryInput, AnalysisResponse
+
+logger = logging.getLogger("hallucination_detector")
+logging.basicConfig(level=logging.INFO)
 
 app = FastAPI(
     title="Hallucination Detector API",
@@ -26,10 +33,13 @@ def health() -> dict:
 
 
 @app.post("/analyze")
-def analyze(query: QueryInput) -> AnalysisResponse:
-    """Analyze a query for potential hallucinations."""
-    return AnalysisResponse(
-        query=query.query,
-        responses={},
-        status="pipeline not connected"
+async def analyze(query: QueryInput) -> AnalysisResponse:
+    """Analyze a query by collecting responses from multiple models."""
+    logger.info("Received analyze request for query: %s", query.query)
+    result = await collect_responses(query.query, query.context)
+    logger.info(
+        "Completed analyze request for query: %s with status: %s",
+        query.query,
+        result.get("status"),
     )
+    return AnalysisResponse(**result)
