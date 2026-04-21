@@ -50,3 +50,5 @@ class AnalysisResponse(BaseModel):
     responses: Dict[str, ModelResponse] = Field(..., description="Responses from each model")
     status: str = Field(..., description="High-level status of the collection")
     collection_metadata: CollectionMetadata = Field(..., description="Metadata for the collection process")
+    analysis: Dict[str, Any] = Field(default_factory=dict, description="Analysis results from all analyzers")
+    analysis_metadata: Dict[str, Any] = Field(default_factory=dict, description="Metadata for the analysis process")

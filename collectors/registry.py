@@ -27,7 +27,7 @@ from collectors.gemini import GeminiCollector
 ACTIVE_COLLECTORS = [
     # GPTCollector(),
     GroqCollector(),
-    # GeminiCollector(),
+    GeminiCollector(),
 ]
 
 """
