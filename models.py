@@ -25,7 +25,7 @@ class QueryInput(BaseModel):
 class ModelResponse(BaseModel):
     """Schema for a single model response."""
 
-    model: Literal["claude", "gpt", "gemini"] = Field(..., description="Model identifier")
+    model: str = Field(..., description="Model identifier")
     response: str = Field(..., description="Normalized text response")
     success: bool = Field(..., description="Whether the model call succeeded")
     error: Optional[str] = Field(None, description="Error message if the model call failed")
