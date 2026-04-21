@@ -1,7 +1,7 @@
 """Claude collector module for the hallucination detector.
 
 This module provides an async wrapper around the Anthropic Claude model.
-It inherits from BaseCollector and auto-registers with the global registry.
+It implements BaseCollector and is registered in the collectors/registry.py.
 """
 
 import asyncio
@@ -11,7 +11,7 @@ from typing import Optional, Dict, Any
 from anthropic import AsyncClient
 
 from config import ANTHROPIC_API_KEY
-from core import BaseCollector, get_registry
+from collectors.base import BaseCollector
 
 MODEL_NAME = "claude-3-5-haiku-20241022"
 TIMEOUT_SECONDS = 10.0
@@ -142,8 +142,3 @@ async def get_response(query: str, context: Optional[str] = None) -> Dict[str, A
     """
     collector = ClaudeCollector()
     return await collector.get_response(query, context)
-
-
-# Auto-register the collector at import time
-_claude_collector = ClaudeCollector()
-get_registry().register(_claude_collector)

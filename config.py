@@ -18,7 +18,7 @@ def load_config() -> Dict[str, str]:
     Raises:
         ValueError: If any required environment variable is missing or empty.
     """
-    required_keys = ['ANTHROPIC_API_KEY', 'OPENAI_API_KEY', 'GEMINI_API_KEY']
+    required_keys = ['ANTHROPIC_API_KEY', 'OPENAI_API_KEY', 'GEMINI_API_KEY', 'GROQ_API_KEY']
     config: Dict[str, str] = {}
 
     for key in required_keys:
@@ -37,3 +37,4 @@ _config = load_config()
 ANTHROPIC_API_KEY: str = _config['ANTHROPIC_API_KEY']
 OPENAI_API_KEY: str = _config['OPENAI_API_KEY']
 GEMINI_API_KEY: str = _config['GEMINI_API_KEY']
+GROQ_API_KEY: str = _config['GROQ_API_KEY']

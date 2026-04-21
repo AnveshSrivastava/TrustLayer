@@ -1,7 +1,7 @@
 """GPT collector module for the hallucination detector.
 
 This module provides an async wrapper around the OpenAI GPT model.
-It inherits from BaseCollector and auto-registers with the global registry.
+It implements BaseCollector and is registered in the collectors/registry.py.
 """
 
 import asyncio
@@ -11,7 +11,7 @@ from typing import Optional, Dict, Any
 from openai import AsyncOpenAI
 
 from config import OPENAI_API_KEY
-from core import BaseCollector, get_registry
+from collectors.base import BaseCollector
 
 MODEL_NAME = "gpt-4o-mini"
 TIMEOUT_SECONDS = 10.0
@@ -142,8 +142,3 @@ async def get_response(query: str, context: Optional[str] = None) -> Dict[str, A
     """
     collector = GPTCollector()
     return await collector.get_response(query, context)
-
-
-# Auto-register the collector at import time
-_gpt_collector = GPTCollector()
-get_registry().register(_gpt_collector)
